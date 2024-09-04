@@ -186,7 +186,7 @@ open class SocketManager: NSObject, SocketManagerSpec, SocketParsable, SocketDat
     ///
     /// Override if you wish to attach a custom `SocketEngineSpec`.
     open func connect() {
-        guard status == .connected || (status == .connecting && currentReconnectAttempt == 0) {
+        guard !(status == .connected || (status == .connecting && currentReconnectAttempt == 0)) else {
             DefaultSocketLogger.Logger.log("Tried connecting an already active socket", type: SocketManager.logType)
             return
         }
