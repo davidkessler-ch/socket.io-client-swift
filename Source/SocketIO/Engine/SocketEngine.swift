@@ -761,9 +761,12 @@ extension SocketEngine {
         case .disconnected(_, _):
             wsConnected = false
             websocketDidDisconnect(error: nil)
-        case .viabilityChanged(false):
-            wsConnected = false
-            websocketDidDisconnect(error: nil)
+        case let .viabilityChanged(isViable):
+            if !isViable {
+                wsConnected = false
+                websocketDidDisconnect(error: nil)
+            }
+            break
         case .peerClosed:
             wsConnected = false
             websocketDidDisconnect(error: nil)
